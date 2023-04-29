@@ -24,6 +24,24 @@ exports.getItems = async (req, res) => {
   }
 };
 
+exports.getItemsfromkeys = async (req, res) => {
+  const params = {
+    TableName: process.env.aws_items_table_name,
+    FilterExpression: "user_name = :u AND category = :c",
+    ExpressionAttributeValues: {
+      ":u": req.body.user_name,
+      ":c": req.body.category,
+    },
+  };
+  try {
+    const data = await docClient.send(new ScanCommand(params));
+    res.send(data.Items);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send(err);
+  }
+};
+
 // TODO #1.2: Add an item to DynamoDB
 exports.addItem = async (req, res) => {
   const item_id = uuidv4();
