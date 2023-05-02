@@ -4,7 +4,8 @@ const itemsController = require("../controller/itemsController");
 const router = express.Router();
 
 router.get("/", itemsController.getItems);
-router.get("/keys", itemsController.getItemsfromkeys);
+//router.get("/categories", itemsController.getCategories);
+router.get("/:user", itemsController.getItemsforeachuser);
 router.post("/", itemsController.addItem);
 router.delete("/:item_id", itemsController.deleteItem);
 
